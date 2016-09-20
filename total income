@@ -1,0 +1,12 @@
+s1 = load '/user/hive/warehouse/censusdb.db/censustable/' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:double,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+s2 = foreach s1 generate income;  
+
+s3 = foreach s2 generate 1 as flag,income;
+
+s4 = group s3 by flag; 
+
+s5 = foreach s4 generate SUM(s3.income);
+
+dump s5;
+store s5 into '/user/cloudera/Total_Income';

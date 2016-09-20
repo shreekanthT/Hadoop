@@ -1,0 +1,4 @@
+s1 = load '/MoviesDetails.dat' using PigStorage(',') as (mid:int,mname:chararray,year:int,rating:double,duration:int);
+s2 = filter s1 by year>1945 and year<1959 as movies;
+dump s2;
+

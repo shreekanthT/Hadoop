@@ -1,0 +1,5 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+s2 = order s1 by amt ASC;
+dump s2;
+
+

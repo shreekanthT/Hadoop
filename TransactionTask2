@@ -1,0 +1,7 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+s2 = filter s1 by amt>160;
+s3 = foreach s2 generate 1 as one,tid;
+s4 = group s3 by one;
+s5 = foreach s4 generate COUNT(s3.one);
+dump s5;
+

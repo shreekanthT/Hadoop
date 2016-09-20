@@ -1,0 +1,17 @@
+s1 = load '/user/hive/warehouse/census_voter' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:chararray,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+s2 = foreach s1 generate age,gender,maritalstatus;
+s2a = filter s2 by ($1==' Female');
+
+s3 = group s2a by maritalstatus;
+
+s4 = foreach s3 generate group,COUNT(s2a.age); 
+
+Total_Widowed = filter s4 by ($0==' Widowed');
+Total_Divorced = filter s4 by ($0==' Divorced');
+
+store Total_Widowed into '/user/cloudera/No_of_widowed';
+store Total_Divorced into '/user/cloudera/No_of_divorced';
+
+dump Total_Divorced;
+dump Total_Widowed;

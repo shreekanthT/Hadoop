@@ -1,0 +1,6 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+s2 = foreach s1 generate SUBSTRING(tdate,0,2) as month,amt;
+s3 = group s2 by month;
+s4 = foreach s3 generate group,SUM(s2.amt);
+dump s4;
+

@@ -1,0 +1,4 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+s2 = filter s1 by amt>160;
+dump s2;
+

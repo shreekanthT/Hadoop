@@ -1,0 +1,11 @@
+s1 = load '/user/hive/warehouse/censusdb.db/censustable' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:chararray,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+s2 = foreach s1 generate age,education,gender;
+
+s3 = group s2 by (education,gender);
+
+s4 = foreach s3 generate FLATTEN(group) as (e,g),COUNT(s2.age); 
+
+store s4 into '/user/cloudera/Education_wise_gender_count';
+
+dump s4;

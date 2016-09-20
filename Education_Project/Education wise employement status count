@@ -1,0 +1,17 @@
+s1 = load '/user/hive/warehouse/census_voter' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:chararray,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+s2 = foreach s1 generate education,age,weekworked;
+s2a = filter s2 by weekworked>0;
+s2b = filter s2 by weekworked==0;
+
+s3a = group s2a by education;
+s3b = group s2b by education;
+
+s4a = foreach s3a generate group,'Employed',COUNT(s2a.age); 
+s4b = foreach s3b generate group,'Unemployed',COUNT(s2b.age); 
+
+store s4a into '/user/cloudera/Education_wise_employed_count';
+store s4b into '/user/cloudera/Education_wise_unemployed_count';
+
+dump s4a;
+dump s4b;

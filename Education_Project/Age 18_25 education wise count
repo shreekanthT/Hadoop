@@ -1,0 +1,18 @@
+s1 = load '/user/hive/warehouse/census_voter' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:chararray,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+
+s2 = foreach s1 generate education,age;
+
+s2a = filter s2 by (age>=18 AND age<=25);
+
+
+s3 = group s2a by education;
+
+
+s4 = foreach s3 generate group,COUNT(s2a.age); 
+
+
+store s4 into '/user/cloudera/18_25_educationwise_count';
+
+
+dump s4;

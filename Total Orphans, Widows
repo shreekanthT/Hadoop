@@ -1,0 +1,20 @@
+//Total no of Orphans & widows 
+
+s1 = load '/user/hive/warehouse/censusdb.db/censustable/' using PigStorage(',') as (age:int,education:chararray,maritalstatus:chararray,gender:chararray,taxfilerstatus:chararray,income:chararray,parents:chararray,countryofbirth:chararray,citizenship:chararray,weekworked:int);
+
+s2 = foreach s1 generate age,parents,maritalstatus;
+
+s3 = group s2 by parents;
+
+s4 = foreach s3 generate group,COUNT(s2.age);
+
+s5 = group s2 by maritalstatus;
+
+s6 = foreach s5 generate group,COUNT(s2.age); 
+
+Total_Orphans = filter s4 by ($0==' Not in universe');
+
+Total_Widowed = filter s6 by ($0==' Widowed');
+
+store Total_Orphans into '/user/cloudera/No_of_orphans';
+store Total_Widowed into '/user/cloudera/No_of_widowed';

@@ -1,0 +1,13 @@
+//hive
+1.In hive created database , and table from sample.dat from /user/cloudera/census folder of hadoop.
+create databse census;
+
+use census;
+
+create table demo(jsondata string) row format delimited stored as textfile;
+load data inpath '/home/cloudera/Desktop/sample.dat' into table demo;
+
+create table census_voter(age int,education string,maritalstatus string,gender string,taxfilerstatus string,income double,parents string,countryofbirth string,citizenship string,weekworked int) row format delimited fields terminated by ',' stored as textfile;
+insert overwrite table census_voter select get_json_object(jsondata,"$.Age"),get_json_object(jsondata,"$.Education"),get_json_object(jsondata,"$.MaritalStatus"),get_json_object(jsondata,"$.Gender"),get_json_object(jsondata,"$.TaxFilerStatus"),get_json_object(jsondata,"$.Income"),get_json_object(jsondata,"$.Parents"),get_json_object(jsondata,"$.CountryOfBirth"),get_json_object(jsondata,"$.Citizenship"),get_json_object(jsondata,"$.WeeksWorked") from demo;
+
+2.Now the csv has been created in the /usr/hive/warehouse/censusdb.db/demo/000000_0

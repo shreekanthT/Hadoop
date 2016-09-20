@@ -1,0 +1,27 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+Jan = filter s1 by SUBSTRING(tdate,0,2)=='01';
+Feb = filter s1 by SUBSTRING(tdate,0,2)=='02';
+Mar = filter s1 by SUBSTRING(tdate,0,2)=='03';
+Apr = filter s1 by SUBSTRING(tdate,0,2)=='04';
+May = filter s1 by SUBSTRING(tdate,0,2)=='05';
+Jun = filter s1 by SUBSTRING(tdate,0,2)=='06';
+July = filter s1 by SUBSTRING(tdate,0,2)=='07';
+Aug = filter s1 by SUBSTRING(tdate,0,2)=='08';
+Sep = filter s1 by SUBSTRING(tdate,0,2)=='09';
+Oct = filter s1 by SUBSTRING(tdate,0,2)=='10';
+Nov = filter s1 by SUBSTRING(tdate,0,2)=='11';
+Dec = filter s1 by SUBSTRING(tdate,0,2)=='12';
+Dump Jan;
+dump Feb;
+dump Mar;
+dump Apr;
+dump May;
+dump Jun;
+dump July;
+dump Aug;
+dump Sep;
+dump Oct;
+dump Nov;
+dump Dec;
+
+

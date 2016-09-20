@@ -1,0 +1,6 @@
+s1 = load '/txnsinput' using PigStorage(',') as (tid:int,tdate:chararray,uid:int,amt:double,cat:chararray,prod:chararray,city:chararray,state:chararray,payment:chararray);
+s2 = foreach s1 generate uid,amt;
+s3 = group s2 by uid;
+s4 = foreach s3 generate group,SUM(s2.amt),COUNT(s2.uid);
+dump s4;
+
